@@ -16,6 +16,14 @@ export default class CustomizeTerserBrowserBuilder extends BrowserBuilder {
       )
       if (terserPlugin) {
         const terserOptionsOriginal = terserPlugin.options.terserOptions
+
+        if (
+          typeof terserOptionsCustom.keep_fnames !== 'boolean' &&
+          !(terserOptionsCustom.keep_fnames instanceof RegExp)
+        ) {
+          terserOptionsCustom.keep_fnames = new RegExp(terserOptionsCustom.keep_fnames)
+        }
+
         terserPlugin.options.terserOptions = {
           ...terserOptionsOriginal,
           ...terserOptionsCustom,
